@@ -1,5 +1,6 @@
 package org.mower.example.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -8,6 +9,7 @@ import lombok.Data;
  * @author bassem
  */
 @Data
+@AllArgsConstructor
 public class MowerPosition {
     private Coordinates mowerCoordinate;
     private MowerOrientation mowerOrientation;
