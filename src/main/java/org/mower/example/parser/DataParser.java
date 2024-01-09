@@ -1,24 +1,25 @@
 package org.mower.example.parser;
 
-import org.mower.example.entities.MowerInstruction;
-import org.mower.example.entities.MowerOrientation;
+import org.mower.example.entities.DataLineFile;
+import org.mower.example.entities.MowerInstructionEnum;
+import org.mower.example.entities.MowerOrientationEnum;
 
 import static org.mower.example.utilities.MowerManagementErrorsUtilities.PATTERN_CORD;
 import static org.mower.example.utilities.MowerManagementErrorsUtilities.SEPARATOR;
 
 public class DataParser {
     public static boolean parseMower(final String mower) {
-        String stringBuilder = MowerOrientation.NORTH.getOrientationCode() +
-                SEPARATOR + MowerOrientation.SOUTH.getOrientationCode() +
-                SEPARATOR + MowerOrientation.EAST.getOrientationCode() +
-                SEPARATOR + MowerOrientation.WEST.getOrientationCode();
-        return mower.matches(PATTERN_CORD + "(" + stringBuilder + ")");
+        String stringBuilder = MowerOrientationEnum.NORTH.getOrientationCode() +
+                SEPARATOR + MowerOrientationEnum.SOUTH.getOrientationCode() +
+                SEPARATOR + MowerOrientationEnum.EAST.getOrientationCode() +
+                SEPARATOR + MowerOrientationEnum.WEST.getOrientationCode();
+        return mower.matches("(\\d+) (\\d+) (" + stringBuilder + ")");
     }
 
     public static boolean parseInstructionsList(final String instructions) {
-        String stringBuilder = "(" + MowerInstruction.MOVE_FORWARD.getInstructionCode() + SEPARATOR
-                + MowerInstruction.MOVE_RIGHT.getInstructionCode() +
-                SEPARATOR + MowerInstruction.MOVE_LEFT.getInstructionCode() +
+        String stringBuilder = "(" + MowerInstructionEnum.AVANCER.getInstructionCode() + SEPARATOR
+                + MowerInstructionEnum.DROITE.getInstructionCode() +
+                SEPARATOR + MowerInstructionEnum.GAUCHE.getInstructionCode() +
                 ")+";
         return instructions.matches(stringBuilder);
     }
@@ -27,9 +28,9 @@ public class DataParser {
         return Lawn.matches(PATTERN_CORD);
     }
 
-    public static boolean executeParse(final DataMapper dataMapper) {
-        return DataParser.parseMower(dataMapper.getMower())
-                && DataParser.parseLawn(dataMapper.getLawn())
-                && DataParser.parseInstructionsList(dataMapper.getInstructions());
+    public static boolean executeParse(final DataLineFile dataLineFile) {
+        return DataParser.parseMower(dataLineFile.getMower())
+                && DataParser.parseLawn(dataLineFile.getLawn())
+                && DataParser.parseInstructionsList(dataLineFile.getInstructions());
     }
 }

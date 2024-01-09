@@ -8,5 +8,5 @@ import java.util.List;
 public class MowerTreatment {
     private LawnCoordinates maxMowerPosition;
     private MowerPosition  actualMowerPosition;
-    private List<MowerInstruction> instructionList;
+    private List<MowerInstructionEnum> instructionList;
 }

@@ -10,10 +10,10 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum MowerInstruction {
-    MOVE_RIGHT("R", "MOVE_RIGHT"),
-    MOVE_LEFT("L", "MOVE_LEFT"),
-    MOVE_FORWARD("F", "MOVE_FORWARD");
+public enum MowerInstructionEnum {
+    DROITE("D", "Pivoter à droite"),
+    GAUCHE("G", "Pivoter à gauche"),
+    AVANCER("A", "Avancer");
 
     private final String instructionCode;
     private final String instructionLabel;

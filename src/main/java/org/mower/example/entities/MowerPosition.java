@@ -12,5 +12,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class MowerPosition {
     private Coordinates mowerCoordinate;
-    private MowerOrientation mowerOrientation;
+    private MowerOrientationEnum mowerOrientationEnum;
 }

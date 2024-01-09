@@ -1,4 +1,4 @@
-package org.mower.example.parser;
+package org.mower.example.entities;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import lombok.Data;
  *
  */
 @Data
-public class DataMapper {
+public class DataLineFile {
     private String lawn;
     private String mower;
     private String instructions;

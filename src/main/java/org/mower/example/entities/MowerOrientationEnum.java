@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum MowerOrientation {
+public enum MowerOrientationEnum {
     NORTH("N", "North"),
     EAST("E", "East"),
     WEST("W", "West"),
