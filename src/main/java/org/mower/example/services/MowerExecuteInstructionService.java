@@ -1,12 +1,9 @@
 package org.mower.example.services;
 
 import lombok.NoArgsConstructor;
-import org.mower.example.entities.Coordinates;
-import org.mower.example.entities.MowerInstruction;
-import org.mower.example.entities.MowerOrientation;
-import org.mower.example.entities.MowerPosition;
+import org.mower.example.entities.*;
 import org.mower.example.exception.MowerException;
-import org.mower.example.utilities.MowerManagementErrors;
+import org.mower.example.utilities.MowerManagementErrorsUtilities;
 
 /**
  * Service class to execute instruction
@@ -21,7 +18,7 @@ public class MowerExecuteInstructionService {
      * @return mowerOrientation after edit
      * @throws MowerException ORIENTATION_INCORRECT_ERROR
      */
-    private MowerOrientation moveLeftRightInstruction(final MowerInstruction mowerInstruction, final MowerOrientation OldMowerOrientation) throws MowerException {
+    private static MowerOrientation moveLeftRightInstruction(final MowerInstruction mowerInstruction, final MowerOrientation OldMowerOrientation) throws MowerException {
         MowerOrientation nextMowerOrientation;
         switch (OldMowerOrientation) {
             case NORTH:
@@ -37,7 +34,7 @@ public class MowerExecuteInstructionService {
                 nextMowerOrientation = mowerInstruction.getInstructionCode().equals(MowerInstruction.MOVE_RIGHT.getInstructionCode()) ? MowerOrientation.NORTH : MowerOrientation.SOUTH;
                 break;
             default:
-                throw new MowerException(MowerManagementErrors.ORIENTATION_INCORRECT_ERROR);
+                throw new MowerException(MowerManagementErrorsUtilities.ORIENTATION_INCORRECT_ERROR);
         }
         return nextMowerOrientation;
     }
@@ -48,7 +45,7 @@ public class MowerExecuteInstructionService {
      * @return MowerCoordinates
      * @throws MowerException POSITION_INCORRECT_ERROR
      */
-    private Coordinates moveForwardInstruction(final MowerPosition mowerPosition) throws MowerException {
+    private static Coordinates moveForwardInstruction(final MowerPosition mowerPosition) throws MowerException {
         int x, y;
         switch (mowerPosition.getMowerOrientation()) {
             case NORTH:
@@ -68,7 +65,7 @@ public class MowerExecuteInstructionService {
                 y = mowerPosition.getMowerCoordinate().getY();
                 break;
             default:
-                throw new MowerException(MowerManagementErrors.POSITION_INCORRECT_ERROR);
+                throw new MowerException(MowerManagementErrorsUtilities.POSITION_INCORRECT_ERROR);
         }
         final Coordinates nextCoordinates = new Coordinates(x, y);
         return nextCoordinates != null ? nextCoordinates : mowerPosition.getMowerCoordinate();
@@ -79,7 +76,7 @@ public class MowerExecuteInstructionService {
      *
      * @throws MowerException INSTRUCTION_INCORRECT_ERROR
      */
-    public void executeInstruction(final MowerInstruction mowerInstruction, final MowerPosition mowerPosition) throws MowerException {
+    private static void executeInstruction(final MowerInstruction mowerInstruction, final MowerPosition mowerPosition) throws MowerException {
         switch (mowerInstruction) {
             case MOVE_LEFT:
             case MOVE_RIGHT:
@@ -89,7 +86,12 @@ public class MowerExecuteInstructionService {
                 mowerPosition.setMowerCoordinate(moveForwardInstruction(mowerPosition));
                 break;
             default:
-                throw new MowerException(MowerManagementErrors.INSTRUCTION_INCORRECT_ERROR);
+                throw new MowerException(MowerManagementErrorsUtilities.INSTRUCTION_INCORRECT_ERROR);
+        }
+    }
+    public static void executeInstructions(final MowerTreatment treatmentMower) throws MowerException{
+        for(MowerInstruction instruction : treatmentMower.getInstructionList()){
+            executeInstruction(instruction, treatmentMower.getActualMowerPosition());
         }
     }
 }
