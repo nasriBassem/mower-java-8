@@ -3,6 +3,7 @@ package org.mower.example.services;
 import lombok.NoArgsConstructor;
 import org.mower.example.entities.*;
 import org.mower.example.exception.MowerException;
+import org.mower.example.parser.DataParser;
 import org.mower.example.utilities.MowerManagementErrorsUtilities;
 
 /**
@@ -75,7 +76,7 @@ public class MowerExecuteInstructionService {
 
     public static void executeInstructions(final MowerTreatment treatmentMower) throws MowerException {
         for (MowerInstructionEnum instruction : treatmentMower.getInstructionList()) {
-            executeInstruction(instruction, treatmentMower.getActualMowerPosition(),treatmentMower.getMaxMowerPosition());
+            treatmentMower.setActualMowerPosition(executeInstruction(instruction, treatmentMower.getActualMowerPosition(),treatmentMower.getMaxMowerPosition()));
         }
     }
 
@@ -84,7 +85,7 @@ public class MowerExecuteInstructionService {
      *
      * @throws MowerException INSTRUCTION_INCORRECT_ERROR
      */
-    public static void executeInstruction(final MowerInstructionEnum instruction, final MowerPosition mowerPosition, final LawnCoordinates maxMowerPosition) throws MowerException {
+    public static MowerPosition executeInstruction(MowerInstructionEnum instruction, MowerPosition mowerPosition,LawnCoordinates maxMowerPosition) throws MowerException {
         switch (instruction) {
             case GAUCHE:
             case DROITE:
@@ -96,5 +97,6 @@ public class MowerExecuteInstructionService {
             default:
                 throw new MowerException(MowerManagementErrorsUtilities.INSTRUCTION_INCORRECT_ERROR);
         }
+        return mowerPosition;
     }
 }

@@ -24,8 +24,8 @@ public class DataParserChecker {
         return instructions.matches(stringBuilder);
     }
 
-    public static boolean parseLawnCheck(final String Lawn) {
-        return Lawn.matches(PATTERN_CORD);
+    public static boolean parseLawnCheck(final String lawn) {
+        return lawn.matches(PATTERN_CORD);
     }
 
     public static boolean executeParseCheck(final DataLineFile dataLineFile) {

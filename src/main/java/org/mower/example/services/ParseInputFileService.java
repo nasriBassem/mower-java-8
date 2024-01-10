@@ -19,25 +19,30 @@ import java.util.Scanner;
 
 public class ParseInputFileService {
 
-    public static List<String> parseDataMapper(final Scanner scanner) throws MowerException {
+    public static List<String> parseLawnAndMowerAndInstructionData(final DataLineFile dataLineFile, final Scanner scanner) throws MowerException {
         final List<String> positionsList = new ArrayList<>();
-        final DataLineFile dataLineFile = new DataLineFile();
-        dataLineFile.setLawn(extractLine(scanner));
-        dataLineFile.setMower(extractLine(scanner));
-        dataLineFile.setInstructions(extractLine(scanner));
-        positionsList.add(parserEtLancerTreatment(dataLineFile));
-        return positionsList;
-    }
-
-    private static String extractLine(final Scanner scanner) throws MowerException {
-        if (scanner.hasNext()) {
-            return scanner.nextLine();
-        } else {
+        if (!scanner.hasNext()) {
             throw new MowerException(MowerManagementErrorsUtilities.INCORRECT_DATA_ERROR);
+        } else {
+            dataLineFile.setLawn(scanner.nextLine());
         }
+        if (!scanner.hasNext()) {
+            throw new MowerException(MowerManagementErrorsUtilities.INCORRECT_DATA_ERROR);
+        } else {
+            while (scanner.hasNext()) {
+                dataLineFile.setMower(scanner.nextLine());
+                if (scanner.hasNext()) {
+                    dataLineFile.setInstructions(scanner.nextLine());
+                    positionsList.add(parserAndLunchTreatment(dataLineFile));
+                } else {
+                    throw new MowerException(MowerManagementErrorsUtilities.INCORRECT_DATA_ERROR);
+                }
+            }
+        }
+      return positionsList;
     }
 
-    private static String parserEtLancerTreatment(final DataLineFile dataLineFile) throws MowerException {
+    private static String parserAndLunchTreatment(final DataLineFile dataLineFile) throws MowerException {
         if (!DataParserChecker.executeParseCheck(dataLineFile)) {
             throw new MowerException(MowerManagementErrorsUtilities.INCORRECT_DATA_ERROR);
         }
@@ -48,7 +53,6 @@ public class ParseInputFileService {
 
         // Launch Treatment Mower
         MowerExecuteInstructionService.executeInstructions(treatmentMower);
-        System.out.println(treatmentMower);
         return treatmentMower.toString();
     }
 }
