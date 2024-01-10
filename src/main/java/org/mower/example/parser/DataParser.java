@@ -1,36 +1,47 @@
 package org.mower.example.parser;
 
-import org.mower.example.entities.DataLineFile;
-import org.mower.example.entities.MowerInstructionEnum;
-import org.mower.example.entities.MowerOrientationEnum;
+import org.mower.example.entities.*;
+import org.mower.example.utilities.MowerManagementErrorsUtilities;
 
-import static org.mower.example.utilities.MowerManagementErrorsUtilities.PATTERN_CORD;
-import static org.mower.example.utilities.MowerManagementErrorsUtilities.SEPARATOR;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataParser {
-    public static boolean parseMower(final String mower) {
-        String stringBuilder = MowerOrientationEnum.NORTH.getOrientationCode() +
-                SEPARATOR + MowerOrientationEnum.SOUTH.getOrientationCode() +
-                SEPARATOR + MowerOrientationEnum.EAST.getOrientationCode() +
-                SEPARATOR + MowerOrientationEnum.WEST.getOrientationCode();
-        return mower.matches("(\\d+) (\\d+) (" + stringBuilder + ")");
+    public static MowerPosition parseLineMower(final String lineMower) {
+        final String[] elements = lineMower.split(MowerManagementErrorsUtilities.CHAINE_ESPACE);
+        final Coordinates mowerCoordinates = new Coordinates(Integer.parseInt(elements[0]), Integer.parseInt(elements[1]));
+        final MowerOrientationEnum mowerOrientationEnum = getOrientation(String.valueOf(elements[2].charAt(0)));
+        return new MowerPosition(mowerCoordinates, mowerOrientationEnum);
     }
 
-    public static boolean parseInstructionsList(final String instructions) {
-        String stringBuilder = "(" + MowerInstructionEnum.AVANCER.getInstructionCode() + SEPARATOR
-                + MowerInstructionEnum.DROITE.getInstructionCode() +
-                SEPARATOR + MowerInstructionEnum.GAUCHE.getInstructionCode() +
-                ")+";
-        return instructions.matches(stringBuilder);
+    public static MowerOrientationEnum getOrientation(final String orientation) {
+        for (MowerOrientationEnum mowerOrientationEnum : MowerOrientationEnum.values()) {
+            if (mowerOrientationEnum.getOrientationCode().equals(orientation)) {
+                return mowerOrientationEnum;
+            }
+        }
+        return null;
     }
 
-    public static boolean parseLawn(final String Lawn) {
-        return Lawn.matches(PATTERN_CORD);
+    public static LawnCoordinates parseLineLawn(final String lineLawn) {
+        final String[] elements = lineLawn.split(MowerManagementErrorsUtilities.CHAINE_ESPACE);
+        return new LawnCoordinates(Integer.parseInt(elements[0]), Integer.parseInt(elements[1]));
     }
 
-    public static boolean executeParse(final DataLineFile dataLineFile) {
-        return DataParser.parseMower(dataLineFile.getMower())
-                && DataParser.parseLawn(dataLineFile.getLawn())
-                && DataParser.parseInstructionsList(dataLineFile.getInstructions());
+    public static List<MowerInstructionEnum> parseLineInstruction(final String instructionLine) {
+        List<MowerInstructionEnum> listInstruction = new ArrayList<MowerInstructionEnum>();
+        for (char instruction : instructionLine.toCharArray()) {
+            listInstruction.add(getInstruction(instruction));
+        }
+        return listInstruction;
+    }
+
+    public static MowerInstructionEnum getInstruction(final char instructionLine) {
+        for (MowerInstructionEnum instruction : MowerInstructionEnum.values()) {
+            if (instruction.getInstructionCode().equals(String.valueOf(instructionLine))) {
+                return instruction;
+            }
+        }
+        return null;
     }
 }

@@ -1,7 +1,7 @@
 package org.mower.example.entities;
 
 import org.junit.Test;
-import org.mower.example.parser.DataParser;
+import org.mower.example.parser.DataParserChecker;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertNotEquals;
@@ -74,7 +74,7 @@ public class DataLineFileTest {
         dataLineFile.setInstructions("DGDGA");
         dataLineFile.setLawn("50 5");
         dataLineFile.setMower("1 2 N");
-        assertTrue(DataParser.executeParse(dataLineFile));
+        assertTrue(DataParserChecker.executeParseCheck(dataLineFile));
     }
 
     @Test
@@ -83,7 +83,7 @@ public class DataLineFileTest {
         dataLineFile.setInstructions("DGDGB");
         dataLineFile.setLawn("50 5");
         dataLineFile.setMower("1 2 N");
-        assertFalse(DataParser.executeParse(dataLineFile));
+        assertFalse(DataParserChecker.executeParseCheck(dataLineFile));
     }
 
     @Test
@@ -92,7 +92,7 @@ public class DataLineFileTest {
         dataLineFile.setInstructions("DGDGA");
         dataLineFile.setLawn("50 A");
         dataLineFile.setMower("1 2 N");
-        assertFalse(DataParser.executeParse(dataLineFile));
+        assertFalse(DataParserChecker.executeParseCheck(dataLineFile));
     }
     @Test
     public void executeParseDataLineFileKOMower() {
@@ -100,6 +100,6 @@ public class DataLineFileTest {
         dataLineFile.setInstructions("DGDGA");
         dataLineFile.setLawn("50 5");
         dataLineFile.setMower("1 2 Z");
-        assertFalse(DataParser.executeParse(dataLineFile));
+        assertFalse(DataParserChecker.executeParseCheck(dataLineFile));
     }
 }
