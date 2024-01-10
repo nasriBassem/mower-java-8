@@ -10,7 +10,6 @@ import java.io.IOException;
 
 import static org.junit.Assert.*;
 import static org.mower.example.RunProgram.listResults;
-import static org.mower.example.entities.MowerOrientationEnum.SOUTH;
 
 public class RunProgramTest {
 

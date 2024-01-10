@@ -3,7 +3,6 @@ package org.mower.example.services;
 import lombok.NoArgsConstructor;
 import org.mower.example.entities.*;
 import org.mower.example.exception.MowerException;
-import org.mower.example.parser.DataParser;
 import org.mower.example.utilities.MowerManagementErrorsUtilities;
 
 /**
