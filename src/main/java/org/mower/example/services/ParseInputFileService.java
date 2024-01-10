@@ -11,6 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ *  Service Class to scan and read input file
+ *
+ * @author bassem
+ */
 
 public class ParseInputFileService {
 

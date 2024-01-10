@@ -12,31 +12,33 @@ import org.mower.example.utilities.MowerManagementErrorsUtilities;
  */
 @NoArgsConstructor
 public class MowerExecuteInstructionService {
+
     /**
      * Edit mower orientation executing a move instruction
      *
      * @return mowerOrientation after edit
+     *
      * @throws MowerException ORIENTATION_INCORRECT_ERROR
      */
-    private static MowerOrientationEnum moveLeftRightInstruction(final MowerInstructionEnum mowerInstructionEnum, final MowerOrientationEnum oldMowerOrientationEnum) throws MowerException {
-        MowerOrientationEnum nextMowerOrientationEnum;
-        switch (oldMowerOrientationEnum) {
+    public static MowerOrientationEnum moveLeftRightInstruction(final MowerInstructionEnum mowerInstruction, final MowerOrientationEnum oldMowerOrientation) throws MowerException {
+        MowerOrientationEnum nextMowerOrientation;
+        switch (oldMowerOrientation) {
             case NORTH:
-                nextMowerOrientationEnum = mowerInstructionEnum.getInstructionCode().equals(MowerInstructionEnum.DROITE.getInstructionCode()) ? MowerOrientationEnum.EAST : MowerOrientationEnum.WEST;
+                nextMowerOrientation = mowerInstruction.getInstructionCode().equals(MowerInstructionEnum.DROITE.getInstructionCode()) ? MowerOrientationEnum.EAST : MowerOrientationEnum.WEST;
                 break;
             case EAST:
-                nextMowerOrientationEnum = mowerInstructionEnum.getInstructionCode().equals(MowerInstructionEnum.DROITE.getInstructionCode()) ? MowerOrientationEnum.SOUTH : MowerOrientationEnum.NORTH;
+                nextMowerOrientation = mowerInstruction.getInstructionCode().equals(MowerInstructionEnum.DROITE.getInstructionCode()) ? MowerOrientationEnum.SOUTH : MowerOrientationEnum.NORTH;
                 break;
             case SOUTH:
-                nextMowerOrientationEnum = mowerInstructionEnum.getInstructionCode().equals(MowerInstructionEnum.DROITE.getInstructionCode()) ? MowerOrientationEnum.WEST : MowerOrientationEnum.EAST;
+                nextMowerOrientation = mowerInstruction.getInstructionCode().equals(MowerInstructionEnum.DROITE.getInstructionCode()) ? MowerOrientationEnum.WEST : MowerOrientationEnum.EAST;
                 break;
             case WEST:
-                nextMowerOrientationEnum = mowerInstructionEnum.getInstructionCode().equals(MowerInstructionEnum.DROITE.getInstructionCode()) ? MowerOrientationEnum.NORTH : MowerOrientationEnum.SOUTH;
+                nextMowerOrientation = mowerInstruction.getInstructionCode().equals(MowerInstructionEnum.DROITE.getInstructionCode()) ? MowerOrientationEnum.NORTH : MowerOrientationEnum.SOUTH;
                 break;
             default:
                 throw new MowerException(MowerManagementErrorsUtilities.ORIENTATION_INCORRECT_ERROR);
         }
-        return nextMowerOrientationEnum;
+        return nextMowerOrientation;
     }
 
     /**
@@ -45,7 +47,7 @@ public class MowerExecuteInstructionService {
      * @return MowerCoordinates
      * @throws MowerException POSITION_INCORRECT_ERROR
      */
-    private static Coordinates moveForwardInstruction(final MowerPosition mowerPosition) throws MowerException {
+    public static Coordinates moveForwardInstruction(final MowerPosition mowerPosition, final LawnCoordinates maxMowerPosition) throws MowerException {
         int x, y;
         switch (mowerPosition.getMowerOrientationEnum()) {
             case NORTH:
@@ -68,27 +70,28 @@ public class MowerExecuteInstructionService {
                 throw new MowerException(MowerManagementErrorsUtilities.POSITION_INCORRECT_ERROR);
         }
         final Coordinates nextCoordinates = new Coordinates(x, y);
-        return nextCoordinates != null ? nextCoordinates : mowerPosition.getMowerCoordinate();
+        return !nextCoordinates.isHorsCoordinatesMax(maxMowerPosition) ? nextCoordinates : mowerPosition.getMowerCoordinate();
     }
 
-    public static void executeInstructions(final MowerTreatment treatmentMower) throws MowerException{
-        for(MowerInstructionEnum instruction : treatmentMower.getInstructionList()){
-            executeInstruction(instruction, treatmentMower.getActualMowerPosition());
+    public static void executeInstructions(final MowerTreatment treatmentMower) throws MowerException {
+        for (MowerInstructionEnum instruction : treatmentMower.getInstructionList()) {
+            executeInstruction(instruction, treatmentMower.getActualMowerPosition(),treatmentMower.getMaxMowerPosition());
         }
     }
+
     /**
      * Execute Instruction
      *
      * @throws MowerException INSTRUCTION_INCORRECT_ERROR
      */
-    private static void executeInstruction(final MowerInstructionEnum mowerInstructionEnum, final MowerPosition mowerPosition) throws MowerException {
-        switch (mowerInstructionEnum) {
+    public static void executeInstruction(final MowerInstructionEnum instruction, final MowerPosition mowerPosition, final LawnCoordinates maxMowerPosition) throws MowerException {
+        switch (instruction) {
             case GAUCHE:
             case DROITE:
-                mowerPosition.setMowerOrientationEnum(moveLeftRightInstruction(mowerInstructionEnum, mowerPosition.getMowerOrientationEnum()));
+                mowerPosition.setMowerOrientationEnum(moveLeftRightInstruction(instruction, mowerPosition.getMowerOrientationEnum()));
                 break;
             case AVANCER:
-                mowerPosition.setMowerCoordinate(moveForwardInstruction(mowerPosition));
+                mowerPosition.setMowerCoordinate(moveForwardInstruction(mowerPosition,maxMowerPosition));
                 break;
             default:
                 throw new MowerException(MowerManagementErrorsUtilities.INSTRUCTION_INCORRECT_ERROR);

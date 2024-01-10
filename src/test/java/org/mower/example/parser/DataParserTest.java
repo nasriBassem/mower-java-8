@@ -6,8 +6,7 @@ import org.mower.example.entities.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 public class DataParserTest {
 
@@ -39,6 +38,12 @@ public class DataParserTest {
         assertEquals(MowerOrientationEnum.EAST , DataParser.getOrientation(mowerOrientation));
         mowerOrientation = "W";
         assertEquals(MowerOrientationEnum.WEST , DataParser.getOrientation(mowerOrientation));
+    }
+
+    @Test
+    public void executeGetOrientationOKNull() {
+        String mowerOrientation = "B";
+        assertNull(DataParser.getOrientation(mowerOrientation));
     }
     @Test
     public void executeGetOrientationKo() {
@@ -101,6 +106,14 @@ public class DataParserTest {
         assertEquals(MowerInstructionEnum.DROITE , DataParser.getInstruction(instruction));
         instruction = 'A';
         assertEquals(MowerInstructionEnum.AVANCER , DataParser.getInstruction(instruction));
+        instruction = 'B';
+        assertNull(DataParser.getInstruction(instruction));
+    }
+
+    @Test
+    public void executeGetInstructionOkNull() {
+        final char instruction = 'B';
+        assertNull(DataParser.getInstruction(instruction));
     }
 
     @Test

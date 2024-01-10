@@ -13,7 +13,9 @@ import lombok.Getter;
 public enum MowerInstructionEnum {
     DROITE("D", "Pivoter à droite"),
     GAUCHE("G", "Pivoter à gauche"),
-    AVANCER("A", "Avancer");
+    AVANCER("A", "Avancer"),
+    UNDEFINED("","");
+
 
     private final String instructionCode;
     private final String instructionLabel;

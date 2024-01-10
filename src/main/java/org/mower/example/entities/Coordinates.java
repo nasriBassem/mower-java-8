@@ -19,10 +19,9 @@ public class Coordinates {
      *
      * @return true if coordinates is OK
      */
-    public boolean checkIfOutsideCoordinatesMax(final Coordinates coordinatesMax) {
+    public boolean isHorsCoordinatesMax(final Coordinates coordinatesMax) {
         return coordinatesMax.getX() >= 0
                 && coordinatesMax.getY() >= 0
-                && coordinatesMax.getX() <= this.x
-                && coordinatesMax.getY() <= this.y;
+                && (coordinatesMax.getX() <= this.x || coordinatesMax.getY() <= this.y);
     }
 }

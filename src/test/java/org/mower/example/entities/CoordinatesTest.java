@@ -29,13 +29,13 @@ public class CoordinatesTest {
     public void checkIfOutsideCoordinatesMaxOK(){
         LawnCoordinates lawCoordinates = new LawnCoordinates(5,5);
         Coordinates c0 = new Coordinates(-1,1);
-        assertFalse(lawCoordinates.checkIfOutsideCoordinatesMax(c0));
+        assertFalse(lawCoordinates.isHorsCoordinatesMax(c0));
     }
 
     @Test
     public void checkIfOutsideCoordinatesMaxKO(){
         LawnCoordinates lawCoordinates = new LawnCoordinates(5,5);
         Coordinates c1 = new Coordinates(1,1);
-        assertTrue(lawCoordinates.checkIfOutsideCoordinatesMax(c1));
+        assertTrue(lawCoordinates.isHorsCoordinatesMax(c1));
     }
 }

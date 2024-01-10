@@ -14,7 +14,8 @@ public enum MowerOrientationEnum {
     NORTH("N", "North"),
     EAST("E", "East"),
     WEST("W", "West"),
-    SOUTH("S", "South");
+    SOUTH("S", "South"),
+    UNDEFINED("","");
 
     private final String orientationCode;
     private final String orientationLabel;
