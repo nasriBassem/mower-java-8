@@ -22,3 +22,7 @@ Le fichier suivant est fourni en entrée : 5 5 1 2 N GAGAGAGAA 3 3 E AADAADADDA
 On attend le résultat suivant (position finale des tondeuses) : 1 3 N 5 1 E 
 
 NB: Les données en entrée sont injectées sous forme de fichier.
+
+# SONAR CHECK TEST
+![image](https://github.com/nasriBassem/mower-java-8/assets/16077655/3bda4dc6-0f17-4b0b-8a25-c09d8eb6a6b8)
+
