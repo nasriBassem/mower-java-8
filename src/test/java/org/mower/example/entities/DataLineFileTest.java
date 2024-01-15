@@ -9,97 +9,49 @@ import static org.junit.Assert.assertNotEquals;
 public class DataLineFileTest {
     @Test
     public void compareEqualDataLineFileOK() {
-        DataLineFile dataLineFile = new DataLineFile();
-        dataLineFile.setInstructions("DGDGA");
-        dataLineFile.setLawn("50 5");
-        dataLineFile.setMower("1 2 N");
-
-        DataLineFile dataLineFile2 = new DataLineFile();
-        dataLineFile2.setInstructions("DGDGA");
-        dataLineFile2.setLawn("50 5");
-        dataLineFile2.setMower("1 2 N");
-
-        assertEquals(dataLineFile, dataLineFile2);
+        assertEquals(parseDataLineFile("DGDGA", "50 5", "1 2 N"), parseDataLineFile("DGDGA", "50 5", "1 2 N"));
     }
 
     @Test
     public void compareEqualDataLineFileKOInstruction() {
-        DataLineFile dataLineFile = new DataLineFile();
-        dataLineFile.setInstructions("DGDGA");
-        dataLineFile.setLawn("50 5");
-        dataLineFile.setMower("1 2 N");
-
-        DataLineFile dataLineFile2 = new DataLineFile();
-        dataLineFile2.setInstructions("DGAGA");
-        dataLineFile2.setLawn("50 5");
-        dataLineFile2.setMower("1 2 N");
-
-        assertNotEquals(dataLineFile, dataLineFile2);
+        assertNotEquals(parseDataLineFile("DGDGA", "50 5", "1 2 N"), parseDataLineFile("DGAGA", "50 5", "1 2 N"));
     }
 
     @Test
     public void compareEqualDataLineFileKOLawn() {
-        DataLineFile dataLineFile = new DataLineFile();
-        dataLineFile.setInstructions("DGDGA");
-        dataLineFile.setLawn("50 5");
-        dataLineFile.setMower("1 2 N");
-
-        DataLineFile dataLineFile2 = new DataLineFile();
-        dataLineFile2.setInstructions("DGDGA");
-        dataLineFile2.setLawn("50 4");
-        dataLineFile2.setMower("1 2 N");
-
-        assertNotEquals(dataLineFile, dataLineFile2);
+        assertNotEquals(parseDataLineFile("DGDGA", "50 5", "1 2 N"), parseDataLineFile("DGDGA", "50 4", "1 2 N"));
     }
 
     @Test
     public void compareEqualDataLineFileKOMower() {
-        DataLineFile dataLineFile = new DataLineFile();
-        dataLineFile.setInstructions("DGDGA");
-        dataLineFile.setLawn("50 5");
-        dataLineFile.setMower("1 2 N");
-
-        DataLineFile dataLineFile2 = new DataLineFile();
-        dataLineFile2.setInstructions("DGDGA");
-        dataLineFile2.setLawn("50 5");
-        dataLineFile2.setMower("1 2 S");
-
-        assertNotEquals(dataLineFile, dataLineFile2);
+        assertNotEquals(parseDataLineFile("DGDGA", "50 5", "1 2 N"), parseDataLineFile("DGDGA", "50 5", "1 2 S"));
     }
-
 
     @Test
     public void executeParseDataLineFileOK() {
-        DataLineFile dataLineFile = new DataLineFile();
-        dataLineFile.setInstructions("DGDGA");
-        dataLineFile.setLawn("50 5");
-        dataLineFile.setMower("1 2 N");
-        assertTrue(DataParserChecker.executeParseCheck(dataLineFile));
+        assertTrue(DataParserChecker.executeParseCheck(parseDataLineFile("DGDGA", "50 5", "1 2 N")));
     }
 
     @Test
     public void executeParseDataLineFileKOInstruction() {
-        DataLineFile dataLineFile = new DataLineFile();
-        dataLineFile.setInstructions("DGDGB");
-        dataLineFile.setLawn("50 5");
-        dataLineFile.setMower("1 2 N");
-        assertFalse(DataParserChecker.executeParseCheck(dataLineFile));
+        assertFalse(DataParserChecker.executeParseCheck(parseDataLineFile("DGDGB", "50 5", "1 2 N")));
     }
 
     @Test
     public void executeParseDataLineFileKOLawn() {
-        DataLineFile dataLineFile = new DataLineFile();
-        dataLineFile.setInstructions("DGDGA");
-        dataLineFile.setLawn("50 A");
-        dataLineFile.setMower("1 2 N");
-        assertFalse(DataParserChecker.executeParseCheck(dataLineFile));
+        assertFalse(DataParserChecker.executeParseCheck(parseDataLineFile("DGDGA", "50 A", "1 2 N")));
     }
+
     @Test
     public void executeParseDataLineFileKOMower() {
-        DataLineFile dataLineFile = new DataLineFile();
-        dataLineFile.setInstructions("DGDGA");
-        dataLineFile.setLawn("50 5");
-        dataLineFile.setMower("1 2 Z");
-        assertFalse(DataParserChecker.executeParseCheck(dataLineFile));
+        assertFalse(DataParserChecker.executeParseCheck(parseDataLineFile("DGDGA", "50 5", "1 2 Z")));
+    }
+
+    private DataLineFile parseDataLineFile(final String instructions, final String lawn, final String mower) {
+        final DataLineFile dataLineFile = new DataLineFile();
+        dataLineFile.setInstructions(instructions);
+        dataLineFile.setLawn(lawn);
+        dataLineFile.setMower(mower);
+        return dataLineFile;
     }
 }

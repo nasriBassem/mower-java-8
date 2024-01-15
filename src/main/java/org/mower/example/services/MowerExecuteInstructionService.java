@@ -1,6 +1,5 @@
 package org.mower.example.services;
 
-import lombok.NoArgsConstructor;
 import org.mower.example.entities.*;
 import org.mower.example.exception.MowerException;
 import org.mower.example.utilities.MowerManagementErrorsUtilities;
@@ -10,9 +9,10 @@ import org.mower.example.utilities.MowerManagementErrorsUtilities;
  *
  * @author bassem
  */
-@NoArgsConstructor
 public class MowerExecuteInstructionService {
 
+    private MowerExecuteInstructionService() {
+    }
     /**
      * Edit mower orientation executing a move instruction
      *
@@ -20,7 +20,7 @@ public class MowerExecuteInstructionService {
      *
      * @throws MowerException ORIENTATION_INCORRECT_ERROR
      */
-    public static MowerOrientationEnum moveLeftRightInstruction(final MowerInstructionEnum mowerInstruction, final MowerOrientationEnum oldMowerOrientation) throws MowerException {
+    protected static MowerOrientationEnum moveLeftRightInstruction(final MowerInstructionEnum mowerInstruction, final MowerOrientationEnum oldMowerOrientation) throws MowerException {
         MowerOrientationEnum nextMowerOrientation;
         switch (oldMowerOrientation) {
             case NORTH:
@@ -47,8 +47,9 @@ public class MowerExecuteInstructionService {
      * @return MowerCoordinates
      * @throws MowerException POSITION_INCORRECT_ERROR
      */
-    public static Coordinates moveForwardInstruction(final MowerPosition mowerPosition, final LawnCoordinates maxMowerPosition) throws MowerException {
-        int x, y;
+    protected static Coordinates moveForwardInstruction(final MowerPosition mowerPosition, final LawnCoordinates maxMowerPosition) throws MowerException {
+        int x;
+        int y;
         switch (mowerPosition.getMowerOrientationEnum()) {
             case NORTH:
                 x = mowerPosition.getMowerCoordinate().getX();
@@ -69,11 +70,11 @@ public class MowerExecuteInstructionService {
             default:
                 throw new MowerException(MowerManagementErrorsUtilities.POSITION_INCORRECT_ERROR);
         }
-        final Coordinates nextCoordinates = new Coordinates(x, y);
-        return !nextCoordinates.isHorsCoordinatesMax(maxMowerPosition) ? nextCoordinates : mowerPosition.getMowerCoordinate();
+        final Coordinates newCoordinates = new Coordinates(x, y);
+        return newCoordinates.isInCoordinatesMax(maxMowerPosition) ? newCoordinates : mowerPosition.getMowerCoordinate();
     }
 
-    public static void executeInstructions(final MowerTreatment treatmentMower) throws MowerException {
+    protected static void executeInstructions(final MowerTreatment treatmentMower) throws MowerException {
         for (MowerInstructionEnum instruction : treatmentMower.getInstructionList()) {
             treatmentMower.setActualMowerPosition(executeInstruction(instruction, treatmentMower.getActualMowerPosition(),treatmentMower.getMaxMowerPosition()));
         }
@@ -84,7 +85,7 @@ public class MowerExecuteInstructionService {
      *
      * @throws MowerException INSTRUCTION_INCORRECT_ERROR
      */
-    public static MowerPosition executeInstruction(MowerInstructionEnum instruction, MowerPosition mowerPosition,LawnCoordinates maxMowerPosition) throws MowerException {
+    protected static MowerPosition executeInstruction(MowerInstructionEnum instruction, MowerPosition mowerPosition,LawnCoordinates maxMowerPosition) throws MowerException {
         switch (instruction) {
             case GAUCHE:
             case DROITE:

@@ -5,15 +5,14 @@ package org.mower.example.utilities;
  *
  * @author bassem
  */
-public class MowerManagementErrorsUtilities {
-    public static final String INCORRECT_DATA_ERROR = "incorrect data";
-    public static final String NOT_FOUND_FILE_ERROR = "not found file";
-    public static final String ORIENTATION_INCORRECT_ERROR = "incorrect orientation";
-    public static final String INSTRUCTION_INCORRECT_ERROR = "incorrect instruction";
-    public static final String POSITION_INCORRECT_ERROR = "incorrect position";
+public interface MowerManagementErrorsUtilities {
+    String INCORRECT_DATA_ERROR = "incorrect data";
+    String NOT_FOUND_FILE_ERROR = "not found file";
+    String ORIENTATION_INCORRECT_ERROR = "incorrect orientation";
+    String INSTRUCTION_INCORRECT_ERROR = "incorrect instruction";
+    String POSITION_INCORRECT_ERROR = "incorrect position";
 
-    public static final String CHAINE_ESPACE = " ";
-    public static final String SEPARATOR = "|";
-    public static final String PATTERN_CORD = "(\\d+) (\\d+)";
-
+    String CHAINE_ESPACE = " ";
+    String SEPARATOR = "|";
+    String PATTERN_CORD = "(\\d+) (\\d+)";
 }

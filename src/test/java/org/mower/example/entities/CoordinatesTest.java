@@ -24,18 +24,35 @@ public class CoordinatesTest {
         Coordinates coordinates2 = new Coordinates(1, 3);
         assertNotEquals(coordinates1, coordinates2);
     }
-
     @Test
-    public void checkIfOutsideCoordinatesMaxOK(){
-        LawnCoordinates lawCoordinates = new LawnCoordinates(5,5);
-        Coordinates c0 = new Coordinates(-1,1);
-        assertFalse(lawCoordinates.isHorsCoordinatesMax(c0));
+    public void checkIfOutsideCoordinatesMaxOK_1(){
+        LawnCoordinates lawCoordinates = new LawnCoordinates(-1,-1);
+        Coordinates c0 = new Coordinates(2,3);
+        assertFalse(c0.isInCoordinatesMax(lawCoordinates));
+    }
+    @Test
+    public void checkIfOutsideCoordinatesMaxOK_2(){
+        LawnCoordinates lawCoordinates = new LawnCoordinates(2,-1);
+        Coordinates c0 = new Coordinates(3,3);
+        assertFalse(c0.isInCoordinatesMax(lawCoordinates));
+    }
+    @Test
+    public void checkIfOutsideCoordinatesMaxOK_3(){
+        LawnCoordinates lawCoordinates = new LawnCoordinates(2,3);
+        Coordinates c0 = new Coordinates(3,3);
+        assertFalse(c0.isInCoordinatesMax(lawCoordinates));
     }
 
     @Test
+    public void checkIfOutsideCoordinatesMaxOK_4(){
+        LawnCoordinates lawCoordinates = new LawnCoordinates(3,2);
+        Coordinates c0 = new Coordinates(3,3);
+        assertFalse(c0.isInCoordinatesMax(lawCoordinates));
+    }
+      @Test
     public void checkIfOutsideCoordinatesMaxKO(){
         LawnCoordinates lawCoordinates = new LawnCoordinates(5,5);
         Coordinates c1 = new Coordinates(1,1);
-        assertTrue(lawCoordinates.isHorsCoordinatesMax(c1));
+        assertTrue(c1.isInCoordinatesMax(lawCoordinates));
     }
 }

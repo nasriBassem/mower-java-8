@@ -8,6 +8,9 @@ import static org.mower.example.utilities.MowerManagementErrorsUtilities.PATTERN
 import static org.mower.example.utilities.MowerManagementErrorsUtilities.SEPARATOR;
 
 public class DataParserChecker {
+
+    private DataParserChecker() {
+    }
     public static boolean parseMowerCheck(final String mower) {
         String stringBuilder = MowerOrientationEnum.NORTH.getOrientationCode() +
                 SEPARATOR + MowerOrientationEnum.SOUTH.getOrientationCode() +

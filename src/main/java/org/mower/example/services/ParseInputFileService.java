@@ -5,11 +5,11 @@ import org.mower.example.exception.MowerException;
 import org.mower.example.parser.DataParser;
 import org.mower.example.entities.DataLineFile;
 import org.mower.example.parser.DataParserChecker;
-import org.mower.example.utilities.MowerManagementErrorsUtilities;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import static org.mower.example.utilities.MowerManagementErrorsUtilities.INCORRECT_DATA_ERROR;
 
 /**
  *  Service Class to scan and read input file
@@ -19,15 +19,18 @@ import java.util.Scanner;
 
 public class ParseInputFileService {
 
+    private ParseInputFileService() {
+    }
+
     public static List<String> parseLawnAndMowerAndInstructionData(final DataLineFile dataLineFile, final Scanner scanner) throws MowerException {
         final List<String> positionsList = new ArrayList<>();
         if (!scanner.hasNext()) {
-            throw new MowerException(MowerManagementErrorsUtilities.INCORRECT_DATA_ERROR);
+            throw new MowerException(INCORRECT_DATA_ERROR);
         } else {
             dataLineFile.setLawn(scanner.nextLine());
         }
         if (!scanner.hasNext()) {
-            throw new MowerException(MowerManagementErrorsUtilities.INCORRECT_DATA_ERROR);
+            throw new MowerException(INCORRECT_DATA_ERROR);
         } else {
             while (scanner.hasNext()) {
                 dataLineFile.setMower(scanner.nextLine());
@@ -35,7 +38,7 @@ public class ParseInputFileService {
                     dataLineFile.setInstructions(scanner.nextLine());
                     positionsList.add(parserAndLunchTreatment(dataLineFile));
                 } else {
-                    throw new MowerException(MowerManagementErrorsUtilities.INCORRECT_DATA_ERROR);
+                    throw new MowerException(INCORRECT_DATA_ERROR);
                 }
             }
         }
@@ -44,7 +47,7 @@ public class ParseInputFileService {
 
     private static String parserAndLunchTreatment(final DataLineFile dataLineFile) throws MowerException {
         if (!DataParserChecker.executeParseCheck(dataLineFile)) {
-            throw new MowerException(MowerManagementErrorsUtilities.INCORRECT_DATA_ERROR);
+            throw new MowerException(INCORRECT_DATA_ERROR);
         }
         final MowerTreatment treatmentMower = new MowerTreatment();
         treatmentMower.setMaxMowerPosition(DataParser.parseLineLawn(dataLineFile.getLawn()));

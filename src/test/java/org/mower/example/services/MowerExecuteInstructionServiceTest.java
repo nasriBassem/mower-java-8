@@ -20,42 +20,42 @@ public class MowerExecuteInstructionServiceTest {
     @Test
     public void moveRightInstructionOKNORTHToEAST() throws MowerException {
         final MowerOrientationEnum nextMowerOrientation = MowerExecuteInstructionService.moveLeftRightInstruction(DROITE, NORTH);
-        assertEquals(nextMowerOrientation, EAST);
+        assertEquals(EAST, nextMowerOrientation);
     }
     @Test
     public void moveRightInstructionOKEASTToSOUTH() throws MowerException {
         final MowerOrientationEnum nextMowerOrientation = MowerExecuteInstructionService.moveLeftRightInstruction(DROITE, EAST);
-        assertEquals(nextMowerOrientation, SOUTH);
+        assertEquals(SOUTH, nextMowerOrientation);
     }
     @Test
     public void moveRightInstructionOKWESTToNORTH() throws MowerException {
         final MowerOrientationEnum nextMowerOrientation = MowerExecuteInstructionService.moveLeftRightInstruction(DROITE, WEST);
-        assertEquals(nextMowerOrientation, NORTH);
+        assertEquals(NORTH, nextMowerOrientation);
     }
     @Test
     public void moveRightInstructionOKSOUTHtoWEST() throws MowerException {
         final MowerOrientationEnum nextMowerOrientation = MowerExecuteInstructionService.moveLeftRightInstruction(DROITE, SOUTH);
-        assertEquals(nextMowerOrientation, WEST);
+        assertEquals(WEST, nextMowerOrientation);
     }
     @Test
     public void moveLeftInstructionOKNORTHToWEST() throws MowerException {
         final MowerOrientationEnum nextMowerOrientation = MowerExecuteInstructionService.moveLeftRightInstruction(GAUCHE, NORTH);
-        assertEquals(nextMowerOrientation, WEST);
+        assertEquals(WEST, nextMowerOrientation);
     }
     @Test
     public void moveLeftInstructionOKEASTToNORTH() throws MowerException {
         final MowerOrientationEnum nextMowerOrientation = MowerExecuteInstructionService.moveLeftRightInstruction(GAUCHE, EAST);
-        assertEquals(nextMowerOrientation, NORTH);
+        assertEquals(NORTH, nextMowerOrientation);
     }
     @Test
     public void moveLeftInstructionOKWESTToSOUTH() throws MowerException {
         final MowerOrientationEnum nextMowerOrientation = MowerExecuteInstructionService.moveLeftRightInstruction(GAUCHE, WEST);
-        assertEquals(nextMowerOrientation, SOUTH);
+        assertEquals(SOUTH, nextMowerOrientation);
     }
     @Test
     public void moveLeftInstructionOKSOUTHtoEAST() throws MowerException {
         final MowerOrientationEnum nextMowerOrientation = MowerExecuteInstructionService.moveLeftRightInstruction(GAUCHE, SOUTH);
-        assertEquals(nextMowerOrientation, EAST);
+        assertEquals(EAST, nextMowerOrientation);
     }
     @Test
     public void moveLeftInstructionOKNullException() throws MowerException {
@@ -68,7 +68,7 @@ public class MowerExecuteInstructionServiceTest {
     @Test
     public void moveForwardInstructionOutsideCoordinatesMaxOK() throws MowerException {
         final LawnCoordinates maxMowerPosition = new LawnCoordinates(5, 5);
-        final MowerPosition actualMowerPosition = new MowerPosition(new Coordinates(6, 4),SOUTH);
+        final MowerPosition actualMowerPosition = new MowerPosition(new Coordinates(4, 5),NORTH);
         final Coordinates nextCoordinates = MowerExecuteInstructionService.moveForwardInstruction(actualMowerPosition,maxMowerPosition);
         assertEquals(nextCoordinates, actualMowerPosition.getMowerCoordinate());
     }
@@ -78,7 +78,8 @@ public class MowerExecuteInstructionServiceTest {
         final LawnCoordinates maxMowerPosition = new LawnCoordinates(5, 5);
         final MowerPosition actualMowerPosition = new MowerPosition(new Coordinates(1, 2),SOUTH);
         final Coordinates nextCoordinates = MowerExecuteInstructionService.moveForwardInstruction(actualMowerPosition,maxMowerPosition);
-        assertEquals(nextCoordinates, new Coordinates(1, 1));
+        final Coordinates expectedCoordinates = new Coordinates(1, 1);
+        assertEquals(expectedCoordinates, nextCoordinates);
     }
     @Test
     public void moveForwardInstructionInsideCoordinatesMaxOKNORTH() throws MowerException {
@@ -118,14 +119,14 @@ public class MowerExecuteInstructionServiceTest {
         final LawnCoordinates maxMowerPosition = new LawnCoordinates(5, 5);
         final MowerPosition actualMowerPosition = new MowerPosition(new Coordinates(1, 2),EAST);
         MowerExecuteInstructionService.executeInstruction(GAUCHE,actualMowerPosition,maxMowerPosition);
-        assertEquals(actualMowerPosition.getMowerOrientationEnum(), NORTH);
+        assertEquals(NORTH, actualMowerPosition.getMowerOrientationEnum());
     }
     @Test
     public void executeInstructionRightOK() throws MowerException {
         final LawnCoordinates maxMowerPosition = new LawnCoordinates(5, 5);
         final MowerPosition actualMowerPosition = new MowerPosition(new Coordinates(1, 2),EAST);
         MowerExecuteInstructionService.executeInstruction(DROITE,actualMowerPosition,maxMowerPosition);
-        assertEquals(actualMowerPosition.getMowerOrientationEnum(), SOUTH);
+        assertEquals(SOUTH, actualMowerPosition.getMowerOrientationEnum());
     }
 
     @Test
