@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
 import static org.junit.Assert.*;
 
 public class Steps {
-    final String CHEMIN_FICHIER = "./src/test/resources/org/mower/example/acceptance/";
+    final String CHEMIN_FICHIER = "./src/test/resources/org/mower/example/";
     String filePath = "";
     @Given("File path :  \"$path\"")
     public void getFilePath(final String path) {

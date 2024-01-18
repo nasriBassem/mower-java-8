@@ -9,9 +9,8 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 
+
 public class RunProgram {
-    private RunProgram(){
-    }
     protected static List<String> listResults;
     public static void main(final String... args) throws MowerException, FileNotFoundException {
         //Check Args
